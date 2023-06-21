@@ -10,7 +10,10 @@
         id="description"
         v-model.trim="description"
       ></textarea>
-      <button class="form__button">Create</button>
+      <button type="submit" class="form__button">Create</button>
+      <button @click="show = !show" class="form__button form__button--close">
+        Close
+      </button>
     </form>
   </div>
 </template>
@@ -74,12 +77,17 @@ export default class TodoForm extends Vue {
   }
 
   &__button {
-    width: 100%;
+    width: 48%;
     border: none;
     color: #ffffff;
     padding: 0.4em;
     border-radius: 0.2em;
     background-color: #ff5656;
+
+    &--close {
+      background-color: #7c7c7c;
+      margin-left: 4%;
+    }
   }
 }
 </style>

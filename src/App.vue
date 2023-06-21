@@ -38,6 +38,8 @@ a {
 
 body {
   overflow-y: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: #3d3d3d #eee;
 }
 
 #app {
@@ -95,5 +97,30 @@ body {
     color: @link-color;
     font-size: 2em;
   }
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-width: 1px 1px 1px 2px;
+  border-color: #000;
+  background-color: #dddddd;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  border-width: 1px 1px 1px 2px;
+  border-color: #555;
+  background-color: #000;
+}
+
+::-webkit-scrollbar-track {
+  border-left: 1px solid #aaa;
+}
+
+::-webkit-scrollbar-track:hover {
+  border-left: 1px solid #555;
+  background-color: #eee;
 }
 </style>

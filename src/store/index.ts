@@ -32,19 +32,21 @@ export default new Vuex.Store({
     },
   },
   actions: {
-    async fetchItems({ commit, dispatch }, columnName) {
+    async fetchItems({ commit }) {
       try {
-        const items = await getTodosLC(columnName);
-        // commit("setItems", items);
-
-        return items;
+        const items = await getTodosLC();
+        commit("setItems", items);
       } catch (e) {
         console.log(e);
       }
     },
-    async createItem({ commit, dispatch }, item) {
-      const todo = await createTodoLC(item);
-      return todo;
+    async createItem({ commit, state }, item) {
+      try {
+        const todo = await createTodoLC(item);
+        commit("setItems", [todo, ...state.items]);
+      } catch (e) {
+        console.log(e);
+      }
     },
     changeFilter({ commit }, value) {
       commit("setFilter", value);

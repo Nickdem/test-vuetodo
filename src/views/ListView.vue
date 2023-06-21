@@ -29,6 +29,7 @@ export default class ListView extends Vue {
   activeColumnName = "todo";
 }
 </script>
+
 <style lang="less" scoped>
 .list {
   display: flex;
