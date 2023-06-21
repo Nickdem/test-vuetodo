@@ -15,6 +15,7 @@ export default new Vuex.Store({
     items: (s) => s.items,
     loading: (s) => s.loading,
     error: (s) => s.error,
+    filter: (s) => s.filter,
   },
   mutations: {
     setItems: (s, values) => {

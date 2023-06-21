@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="container">
     <header class="header">
       <span class="header__logo">TM</span>
       <nav class="header__navigation">
@@ -7,7 +7,7 @@
         <router-link to="/list">List</router-link>
       </nav>
     </header>
-    <main class="main container">
+    <main class="main">
       <router-view />
     </main>
     <footer class="footer">
@@ -36,6 +36,10 @@ a {
   text-decoration: none;
 }
 
+body {
+  overflow-y: hidden;
+}
+
 #app {
   font-family: sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -52,6 +56,7 @@ a {
 
   &__logo {
     font-size: 4em;
+    color: @link-color;
   }
 
   &__navigation {
@@ -71,16 +76,18 @@ a {
 }
 
 .container {
-  padding: 0 4em;
   max-width: 1440px;
-  margin: 0 auto;
+  margin: 1em auto;
+  border-radius: 0.5em;
+  border: 1px solid #7c7c7c;
+  box-shadow: 0 0 5px #393939;
+}
+
+.main {
+  height: calc(100vh - 85px - 63px - 20px);
 }
 
 .footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
   background-color: @red;
   padding: 2em 0;
   text-align: center;

@@ -1,11 +1,13 @@
-export interface IStringObj {
+interface IStringObj {
   [key: string]: string;
 }
 
-export interface ITodoObj {
+interface ITodoObj {
   title: string;
   description: string;
   id: string;
   status: string;
   comments: Array<string>;
 }
+
+export { ITodoObj, IStringObj };
