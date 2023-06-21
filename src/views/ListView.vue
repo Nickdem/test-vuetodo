@@ -1,9 +1,28 @@
 <template>
-  <div class="list">list</div>
+  <div class="list">
+    <TodoFilter />
+    <div class="items"></div>
+    <TodoForm />
+    {{ items }}
+  </div>
 </template>
 
 <script lang="ts">
-import { Vue } from "vue-property-decorator";
+import TodoForm from "@/components/TodoForm.vue";
+import { Vue, Component } from "vue-property-decorator";
+import TodoFilter from "@/components/TodoFilter.vue";
 
-export default class ListView extends Vue {}
+@Component({
+  components: {
+    TodoFilter,
+    TodoForm,
+  },
+})
+export default class ListView extends Vue {
+  items = [];
+
+  async mounted() {
+    this.items = await this.$store.dispatch("fetchItems", "lol");
+  }
+}
 </script>
