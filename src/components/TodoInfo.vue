@@ -16,13 +16,29 @@
         {{ item.description.length ? item.description : "empty" }}
       </p>
       <button class="item__button" @click="editMode = true">Edit</button>
-      <ul class="item__list">
+      <ul class="item__comments">
+        <li class="item__comment comment">
+          <p><b>Comments:</b></p>
+        </li>
         <li
           class="item__comment comment"
           v-for="comment in item.comments"
-          :key="comment.id"
+          :key="comment.date"
         >
-          {{ comment.author }} {{ comment.message }}
+          <p>{{ comment.message }}</p>
+          <span>{{ formatedDate(new Date(+comment.date)) }}</span>
+        </li>
+        <li>
+          <form class="comment__form form" @submit.prevent="commentHandler">
+            <label class="form__label" for="comment">Add comment:</label>
+            <input
+              v-model.trim="comment"
+              class="form__input"
+              type="text"
+              id="comment"
+            />
+            <button type="submit" class="form__button">Add</button>
+          </form>
         </li>
       </ul>
     </div>
@@ -66,12 +82,14 @@
 </template>
 
 <script lang="ts">
+import { dateNow } from "@/utils/helpers";
 import { Component, Vue, Watch } from "vue-property-decorator";
 
 @Component
 export default class Todoinfo extends Vue {
   editMode = false;
   form = this.$store.getters.selectedTodo;
+  comment = "";
 
   get item() {
     const item = this.$store.getters.selectedTodo;
@@ -83,9 +101,12 @@ export default class Todoinfo extends Vue {
     this.editMode = false;
     const form = Object.assign({}, this.item);
     this.form = form;
+    this.comment = "";
   }
 
   formatedDate(d: Date) {
+    console.log("Испрпавить");
+
     const date = d.toISOString().split("T")[0];
     const time = d.toTimeString().split(" ")[0];
     return `${date} ${time}`;
@@ -97,6 +118,15 @@ export default class Todoinfo extends Vue {
     }
     this.$store.dispatch("changeItem", this.form);
     this.editMode = false;
+  }
+
+  commentHandler() {
+    if (this.comment == "") {
+      return;
+    }
+    this.form.comments.push({ message: this.comment, date: dateNow() });
+    this.$store.dispatch("changeItem", this.form);
+    this.comment = "";
   }
 
   deleteHandler(id: string) {
@@ -147,6 +177,25 @@ export default class Todoinfo extends Vue {
     padding: 0.4em;
     border-radius: 0.2em;
     background-color: #ff5656;
+  }
+
+  &__comments {
+    border-top: 1px solid #7c7c7c;
+  }
+
+  &__comment {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1em;
+
+    & p {
+      font-size: 1.6em;
+    }
+
+    & span {
+      color: #7c7c7c;
+    }
   }
 }
 

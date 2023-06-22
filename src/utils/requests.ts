@@ -1,5 +1,5 @@
 import { delay, requestToTheLS } from "./helpers";
-import { ITodoObj } from "./interfaces";
+import { IStringObj, ITodoObj } from "./interfaces";
 
 export const getTodosLC = async () => {
   const res = await delay(() => requestToTheLS("get", "todos"));
@@ -30,3 +30,12 @@ export const deleteTodoLC = async (id: string) => {
   requestToTheLS("post", "todos", todos);
   return id;
 };
+
+// export const createCommentLC = async (id: string, comment: IStringObj) => {
+//   const todosJson = requestToTheLS("get", "todos");
+//   const todos = typeof todosJson === "string" ? JSON.parse(todosJson) : [];
+//   const idx = todos.findIndex((item: ITodoObj) => item.id === id);
+//   todos[idx].comments.push(comment);
+//   await delay(() => requestToTheLS("post", "todos", todos));
+//   return idx;
+// };

@@ -1,4 +1,4 @@
-import { ITodoObj } from "@/utils/interfaces";
+import { IStringObj, ITodoObj } from "@/utils/interfaces";
 import {
   changeTodoLC,
   createTodoLC,
@@ -67,7 +67,6 @@ export default new Vuex.Store({
     },
     async changeItem({ commit, state }, item) {
       const idx = await changeTodoLC(item);
-      console.log(132);
 
       commit("setItems", [
         ...state.items.slice(0, idx),
