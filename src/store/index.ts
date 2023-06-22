@@ -67,6 +67,8 @@ export default new Vuex.Store({
     },
     async changeItem({ commit, state }, item) {
       const idx = await changeTodoLC(item);
+      console.log(132);
+
       commit("setItems", [
         ...state.items.slice(0, idx),
         item,
@@ -75,9 +77,16 @@ export default new Vuex.Store({
       commit("setSelectedTodo", item);
     },
     async deleteItem({ commit, state }, itemId) {
-      const todos = await deleteTodoLC(itemId);
-      commit("setItems", todos);
-      commit("setSelectedTodo", {});
+      try {
+        const id = await deleteTodoLC(itemId);
+        commit(
+          "setItems",
+          state.items.filter((item: ITodoObj) => item.id !== itemId)
+        );
+        commit("setSelectedTodo", {});
+      } catch (e) {
+        console.log(e);
+      }
     },
   },
   modules: {},

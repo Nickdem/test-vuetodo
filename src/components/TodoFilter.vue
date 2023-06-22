@@ -1,6 +1,6 @@
 <template>
   <form class="form">
-    <label class="form__label" for="filter">Фильтр по названию:</label>
+    <label class="form__label" for="filter">Sort by name:</label>
     <input
       class="form__input"
       type="text"

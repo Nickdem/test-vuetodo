@@ -15,7 +15,7 @@
         Description: <br />
         {{ item.description.length ? item.description : "empty" }}
       </p>
-      <button @click="editMode = true">Edit</button>
+      <button class="item__button" @click="editMode = true">Edit</button>
       <ul class="item__list">
         <li
           class="item__comment comment"
@@ -28,39 +28,39 @@
     </div>
     <div v-if="editMode">
       <form class="form" @submit.prevent="submitHandler">
-        <label class="form__label" for="title">Название задачи:</label>
+        <label class="form__label" for="title">Item name:</label>
         <input
           class="form__input"
           type="text"
           id="title"
           v-model.trim="form.title"
         />
-        <label class="form__label" for="status">Статус:</label>
+        <label class="form__label" for="status">Item status:</label>
         <select id="status" class="form__input" v-model="form.status">
           <option value="todo">Todo</option>
           <option value="in-progress">In-progress</option>
           <option value="done">Done</option>
         </select>
-        <label class="form__label" for="description">Описание задачи:</label>
+        <label class="form__label" for="description">Item description:</label>
         <textarea
           class="form__input"
           id="description"
           v-model.trim="form.description"
         ></textarea>
         <button class="form__button" type="submit">Save</button>
-        <button
-          class="form__button form__button--delete"
-          @click="deleteHandler(item.id)"
-        >
-          Delete
-        </button>
-        <button
-          class="form__button form__button--close"
-          @click="editMode = false"
-        >
-          Cancel
-        </button>
       </form>
+      <button
+        class="form__button form__button--delete"
+        @click="deleteHandler(item.id)"
+      >
+        Delete
+      </button>
+      <button
+        class="form__button form__button--close"
+        @click="editMode = false"
+      >
+        Cancel
+      </button>
     </div>
   </div>
 </template>
@@ -139,6 +139,15 @@ export default class Todoinfo extends Vue {
     font-size: 1.8em;
     margin: 1em 0;
   }
+
+  &__button {
+    width: 10%;
+    border: none;
+    color: #ffffff;
+    padding: 0.4em;
+    border-radius: 0.2em;
+    background-color: #ff5656;
+  }
 }
 
 .form {
@@ -166,6 +175,7 @@ export default class Todoinfo extends Vue {
     padding: 0.4em;
     border-radius: 0.2em;
     background-color: #ff5656;
+    margin-bottom: 1%;
 
     &--close {
       background-color: #7c7c7c;
@@ -174,7 +184,6 @@ export default class Todoinfo extends Vue {
 
     &--delete {
       background-color: #dddddd;
-      margin-left: 1%;
       color: black;
     }
   }

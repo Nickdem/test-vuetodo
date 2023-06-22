@@ -2,9 +2,9 @@
   <div class="create">
     <button v-if="!show" @click="show = !show" class="create__button">+</button>
     <form v-else class="create__form form" @submit.prevent="submitHandler">
-      <label class="form__label" for="title">Название задачи:</label>
+      <label class="form__label" for="title">Item name:</label>
       <input class="form__input" type="text" id="title" v-model.trim="title" />
-      <label class="form__label" for="description">Описание задачи:</label>
+      <label class="form__label" for="description">Item description:</label>
       <textarea
         class="form__input"
         id="description"
