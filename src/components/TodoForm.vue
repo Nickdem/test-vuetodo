@@ -74,6 +74,11 @@ export default class TodoForm extends Vue {
     width: 100%;
     font-size: 1.4em;
     padding: 0.6em;
+    font-family: sans-serif;
+  }
+
+  textarea {
+    resize: none;
   }
 
   &__button {

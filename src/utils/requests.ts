@@ -14,3 +14,23 @@ export const createTodoLC = async (item: ITodoObj) => {
   await delay(() => requestToTheLS("post", "todos", todos));
   return item;
 };
+
+export const changeTodoLC = async (todoItem: ITodoObj) => {
+  const todosJson = requestToTheLS("get", "todos");
+  const todos = typeof todosJson === "string" ? JSON.parse(todosJson) : [];
+
+  const idx = todos.findIndex((item: ITodoObj) => item.id === todoItem.id);
+  todos[idx] = todoItem;
+  await delay(() => requestToTheLS("post", "todos", todos));
+  return idx;
+};
+
+export const deleteTodoLC = async (id: string) => {
+  const todosJson = requestToTheLS("get", "todos");
+  let todos = typeof todosJson === "string" ? JSON.parse(todosJson) : [];
+
+  todos = todos.filter((item: ITodoObj) => item.id !== id);
+
+  await delay(() => requestToTheLS("post", "todos", todos));
+  return todos;
+};

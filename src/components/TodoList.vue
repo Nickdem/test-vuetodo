@@ -53,9 +53,13 @@ export default class TodoList extends Vue {
 </script>
 
 <style lang="less" scoped>
+h2 {
+  padding: 0.5em 1em;
+}
 .column__list {
   overflow-x: hidden;
   overflow-y: scroll;
+  height: 100%;
 }
 
 .column__item {

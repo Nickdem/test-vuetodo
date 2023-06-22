@@ -1,4 +1,10 @@
-import { createTodoLC, getTodosLC } from "@/utils/requests";
+import { ITodoObj } from "@/utils/interfaces";
+import {
+  changeTodoLC,
+  createTodoLC,
+  deleteTodoLC,
+  getTodosLC,
+} from "@/utils/requests";
 import Vue from "vue";
 import Vuex from "vuex";
 
@@ -58,6 +64,20 @@ export default new Vuex.Store({
     },
     async selectItem({ commit }, item) {
       commit("setSelectedTodo", item);
+    },
+    async changeItem({ commit, state }, item) {
+      const idx = await changeTodoLC(item);
+      commit("setItems", [
+        ...state.items.slice(0, idx),
+        item,
+        ...state.items.slice(idx + 1),
+      ]);
+      commit("setSelectedTodo", item);
+    },
+    async deleteItem({ commit, state }, itemId) {
+      const todos = await deleteTodoLC(itemId);
+      commit("setItems", todos);
+      commit("setSelectedTodo", {});
     },
   },
   modules: {},

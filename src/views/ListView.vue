@@ -40,7 +40,7 @@ export default class ListView extends Vue {
 .sidebar {
   display: flex;
   flex-direction: column;
-  width: 200px;
+  width: 15%;
   height: 100%;
   background-color: #dddddd;
 

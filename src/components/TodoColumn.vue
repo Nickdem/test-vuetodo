@@ -1,6 +1,6 @@
 <template>
   <aside class="column">
-    <TodoFilter v-if="filteredItems.length" />
+    <TodoFilter v-if="$store.getters.items.length" />
     <TodoForm v-if="columnName == 'todo'" />
     <TodoList :items="filteredItems" />
   </aside>
@@ -52,7 +52,7 @@ export default class TodoColumn extends Vue {
 .column {
   display: flex;
   flex-direction: column;
-  width: 200px;
+  width: 15%;
   border-right: 1px solid #7c7c7c;
   border-left: 1px solid #7c7c7c;
   height: 100%;
