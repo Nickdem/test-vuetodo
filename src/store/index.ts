@@ -10,12 +10,14 @@ export default new Vuex.Store({
     loading: true,
     error: false,
     filter: "",
+    selectedTodo: {},
   },
   getters: {
     items: (s) => s.items,
     loading: (s) => s.loading,
     error: (s) => s.error,
     filter: (s) => s.filter,
+    selectedTodo: (s) => s.selectedTodo,
   },
   mutations: {
     setItems: (s, values) => {
@@ -29,6 +31,9 @@ export default new Vuex.Store({
     },
     setFilter: (s, value) => {
       s.filter = value;
+    },
+    setSelectedTodo: (s, value) => {
+      s.selectedTodo = value;
     },
   },
   actions: {
@@ -50,6 +55,9 @@ export default new Vuex.Store({
     },
     changeFilter({ commit }, value) {
       commit("setFilter", value);
+    },
+    async selectItem({ commit }, item) {
+      commit("setSelectedTodo", item);
     },
   },
   modules: {},

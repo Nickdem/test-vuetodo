@@ -1,7 +1,7 @@
 <template>
   <aside class="column">
-    <TodoFilter v-if="items.length" />
-    <TodoForm />
+    <TodoFilter v-if="filteredItems.length" />
+    <TodoForm v-if="columnName == 'todo'" />
     <TodoList :items="filteredItems" />
   </aside>
 </template>
@@ -31,16 +31,9 @@ interface ITodoObj {
 export default class TodoColumn extends Vue {
   @Prop({ default: "Column", type: String })
   columnName!: string;
-  items = this.$store.getters.items;
 
   async mounted() {
     await this.$store.dispatch("fetchItems");
-
-    this.items = this.$store.getters.items;
-  }
-
-  unmount() {
-    this.items = [];
   }
 
   get filteredItems() {
