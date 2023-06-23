@@ -7,8 +7,12 @@
         <router-link to="/list" v-if="$store.getters.user.length"
           >List</router-link
         >
-        <button @click="logoutHandler" v-if="$store.getters.user.length">
-          Log out
+        <button
+          class="header__button"
+          @click="logoutHandler"
+          v-if="$store.getters.user.length"
+        >
+          Sign out
         </button>
       </nav>
     </header>
@@ -33,7 +37,10 @@ export default class AppView extends Vue {
 
   logoutHandler() {
     this.$store.dispatch("logoutUser");
-    router.push("/");
+
+    if (this.$route.path !== "/") {
+      router.push("/");
+    }
   }
 }
 </script>
@@ -95,6 +102,14 @@ body {
       &.router-link-exact-active {
         color: @link-color-hover;
       }
+    }
+
+    button {
+      border: none;
+      color: #ffffff;
+      padding: 0.4em;
+      border-radius: 0.2em;
+      background-color: #393939;
     }
   }
 }

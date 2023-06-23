@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <h3>Home</h3>
+    <h3 class="home__title">Home</h3>
     <form v-if="!$store.getters.user.length" class="form">
       <label class="form__label" for="name">Your name:</label>
       <input class="form__input" type="text" id="name" v-model.trim="name" />
@@ -19,7 +19,10 @@
         Sign in
       </button>
     </form>
-    <div class="" v-else>Hello {{ $store.getters.user }}</div>
+    <h4 class="home__welcome" v-else>
+      Hello {{ $store.getters.user }}! Check
+      <router-link to="/list"> tasks</router-link>
+    </h4>
   </div>
 </template>
 
@@ -37,6 +40,7 @@ export default class HomeView extends Vue {
     const target = e.target as HTMLButtonElement;
     if (target.name == "sign-in") {
       this.$store.dispatch("loginUser", this.name);
+      this.name = "";
     }
 
     if (target.name == "sign-up") {
@@ -45,3 +49,50 @@ export default class HomeView extends Vue {
   }
 }
 </script>
+
+<style lang="less" scoped>
+.home {
+  padding: 0.5em 1em;
+
+  &__title {
+    font-size: 1.8em;
+  }
+
+  &__welcome {
+    font-size: 1.6em;
+
+    & a {
+      color: #ff5656;
+    }
+  }
+}
+
+.form {
+  text-align: left;
+  width: 400px;
+
+  &__label {
+    font-size: 1.6em;
+  }
+
+  &__input {
+    width: 100%;
+    font-size: 1.4em;
+    padding: 0.6em;
+    font-family: sans-serif;
+  }
+
+  &__button {
+    width: 49%;
+    border: none;
+    color: #ffffff;
+    padding: 0.4em;
+    border-radius: 0.2em;
+    background-color: #ff5656;
+
+    &:last-child {
+      margin-left: 2%;
+    }
+  }
+}
+</style>
