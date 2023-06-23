@@ -26,13 +26,17 @@ import router from "@/router";
   components: { TodoColumn, TodoInfo },
 })
 export default class ListView extends Vue {
-  btns = ["todo", "in-progress", "done"];
+  btns = ["todo", "in-progress", "done", "for you", "without performer"];
   activeColumnName = "todo";
 
   created() {
     if (!this.$store.getters.user.length) {
       router.push("/");
     }
+  }
+
+  async mounted() {
+    this.$store.dispatch("getUsers");
   }
 }
 </script>

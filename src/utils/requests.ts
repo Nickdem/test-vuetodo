@@ -31,7 +31,7 @@ export const deleteTodoLC = async (id: string) => {
   return id;
 };
 
-const getUsersLC = async () => {
+export const getUsersLC = async () => {
   const res = await delay(() => requestToTheLS("get", "users"));
   const json = (await typeof res) === "string" ? JSON.parse(res) : [];
   return json.length ? json : [];
@@ -77,6 +77,7 @@ export const logoutUserLC = async () => {
 };
 
 export const getUserLC = async () => {
-  const user = (await delay(() => requestToTheLS("get", "activeUser"))) || null;
-  return user;
+  const user = await delay(() => requestToTheLS("get", "activeUser"));
+  const json = (await typeof user) === "string" ? JSON.parse(user) : "";
+  return json;
 };

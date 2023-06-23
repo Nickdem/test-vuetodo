@@ -11,6 +11,7 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 import TodoForm from "./TodoForm.vue";
 import TodoFilter from "./TodoFilter.vue";
 import TodoList from "./TodoList.vue";
+import { IStringObj } from "@/utils/interfaces";
 
 // не видит в интерфейсах
 interface ITodoObj {
@@ -18,7 +19,9 @@ interface ITodoObj {
   description: string;
   id: string;
   status: string;
-  comments: Array<string>;
+  comments: Array<IStringObj>;
+  from: string;
+  to: string;
 }
 
 @Component({
@@ -38,6 +41,22 @@ export default class TodoColumn extends Vue {
 
   get filteredItems() {
     const items: Array<ITodoObj> = this.$store.getters.items;
+
+    if (this.columnName == "for you") {
+      return items.filter(
+        (item) =>
+          item.title.includes(this.$store.getters.filter) &&
+          item.to === this.$store.getters.user &&
+          item.status !== "done"
+      );
+    }
+
+    if (this.columnName == "without performer") {
+      return items.filter(
+        (item) =>
+          item.title.includes(this.$store.getters.filter) && item.to === ""
+      );
+    }
 
     return items.filter(
       (item) =>

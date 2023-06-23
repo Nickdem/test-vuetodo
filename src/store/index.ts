@@ -5,6 +5,7 @@ import {
   deleteTodoLC,
   getTodosLC,
   getUserLC,
+  getUsersLC,
   loginUserLC,
   logoutUserLC,
   regUserLC,
@@ -22,6 +23,7 @@ export default new Vuex.Store({
     filter: "",
     selectedTodo: {},
     user: "",
+    users: [],
   },
   getters: {
     items: (s) => s.items,
@@ -30,6 +32,7 @@ export default new Vuex.Store({
     filter: (s) => s.filter,
     selectedTodo: (s) => s.selectedTodo,
     user: (s) => s.user,
+    users: (s) => s.users,
   },
   mutations: {
     setItems: (s, values) => {
@@ -49,6 +52,9 @@ export default new Vuex.Store({
     },
     setUser: (s, value) => {
       s.user = value;
+    },
+    setUsers: (s, value) => {
+      s.users = value;
     },
   },
   actions: {
@@ -124,6 +130,14 @@ export default new Vuex.Store({
       try {
         const name = await getUserLC();
         commit("setUser", name);
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    async getUsers({ commit }) {
+      try {
+        const names = await getUsersLC();
+        commit("setUsers", names);
       } catch (e) {
         console.log(e);
       }

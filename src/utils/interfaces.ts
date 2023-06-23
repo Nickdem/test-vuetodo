@@ -7,7 +7,9 @@ interface ITodoObj {
   description: string;
   id: string;
   status: string;
-  comments: Array<string>;
+  comments: Array<IStringObj>;
+  from: string;
+  to: string;
 }
 
 export { ITodoObj, IStringObj };

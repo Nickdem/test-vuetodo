@@ -11,6 +11,14 @@
         Status: <br />
         {{ item.status }}
       </p>
+      <p class="item__status">
+        From user: <br />
+        {{ item.from }}
+      </p>
+      <p class="item__status">
+        To user: <br />
+        {{ item.to.length ? item.to : "empty" }}
+      </p>
       <p class="item__description">
         Description: <br />
         {{ item.description.length ? item.description : "empty" }}
@@ -25,7 +33,10 @@
           v-for="comment in item.comments"
           :key="comment.date"
         >
-          <p>{{ comment.message }}</p>
+          <p>
+            <span>{{ comment.author }}</span>
+            {{ comment.message }}
+          </p>
           <span>{{ formatedDate(new Date(+comment.date)) }}</span>
         </li>
         <li>
@@ -56,6 +67,16 @@
           <option value="todo">Todo</option>
           <option value="in-progress">In-progress</option>
           <option value="done">Done</option>
+        </select>
+        <label class="form__label" for="to">For user:</label>
+        <select id="to" class="form__input" v-model="form.to">
+          <option
+            v-for="user in $store.getters.users"
+            :key="user"
+            :value="user"
+          >
+            {{ user }}
+          </option>
         </select>
         <label class="form__label" for="description">Item description:</label>
         <textarea
@@ -124,7 +145,11 @@ export default class Todoinfo extends Vue {
     if (this.comment == "") {
       return;
     }
-    this.form.comments.push({ message: this.comment, date: dateNow() });
+    this.form.comments.push({
+      author: this.$store.getters.user,
+      message: this.comment,
+      date: dateNow(),
+    });
     this.$store.dispatch("changeItem", this.form);
     this.comment = "";
   }

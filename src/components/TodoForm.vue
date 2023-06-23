@@ -12,6 +12,12 @@
         id="description"
         v-model.trim="description"
       ></textarea>
+      <label class="form__label" for="user">For user:</label>
+      <select id="user" class="form__input" v-model="to">
+        <option v-for="user in $store.getters.users" :key="user" :value="user">
+          {{ user }}
+        </option>
+      </select>
       <button type="submit" class="form__button">Create</button>
       <button @click="show = !show" class="form__button form__button--close">
         Close
@@ -29,6 +35,7 @@ export default class TodoForm extends Vue {
   show = false;
   title = "";
   description = "";
+  to = "";
 
   submitHandler() {
     if (this.title == "") {
@@ -40,9 +47,12 @@ export default class TodoForm extends Vue {
       status: "todo",
       id: dateNow(),
       comments: [],
+      from: this.$store.getters.user,
+      to: this.to,
     });
     this.title = "";
     this.description = "";
+    this.to = "";
     this.show = !this.show;
   }
 }
