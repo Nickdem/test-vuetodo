@@ -1,6 +1,8 @@
 <template>
   <div class="create">
-    <button v-if="!show" @click="show = !show" class="create__button">+</button>
+    <button v-if="!show" @click="show = !show" class="create__button">
+      Add
+    </button>
     <form v-else class="create__form form" @submit.prevent="submitHandler">
       <label class="form__label" for="title">Item name:</label>
       <input class="form__input" type="text" id="title" v-model.trim="title" />

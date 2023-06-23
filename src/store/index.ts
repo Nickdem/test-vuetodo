@@ -4,6 +4,10 @@ import {
   createTodoLC,
   deleteTodoLC,
   getTodosLC,
+  getUserLC,
+  loginUserLC,
+  logoutUserLC,
+  regUserLC,
 } from "@/utils/requests";
 import Vue from "vue";
 import Vuex from "vuex";
@@ -17,6 +21,7 @@ export default new Vuex.Store({
     error: false,
     filter: "",
     selectedTodo: {},
+    user: "",
   },
   getters: {
     items: (s) => s.items,
@@ -24,6 +29,7 @@ export default new Vuex.Store({
     error: (s) => s.error,
     filter: (s) => s.filter,
     selectedTodo: (s) => s.selectedTodo,
+    user: (s) => s.user,
   },
   mutations: {
     setItems: (s, values) => {
@@ -40,6 +46,9 @@ export default new Vuex.Store({
     },
     setSelectedTodo: (s, value) => {
       s.selectedTodo = value;
+    },
+    setUser: (s, value) => {
+      s.user = value;
     },
   },
   actions: {
@@ -83,6 +92,38 @@ export default new Vuex.Store({
           state.items.filter((item: ITodoObj) => item.id !== itemId)
         );
         commit("setSelectedTodo", {});
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    async regUser({ commit }, name) {
+      try {
+        const res = await regUserLC(name);
+        commit("setUser", res);
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    async loginUser({ commit }, name) {
+      try {
+        const res = await loginUserLC(name);
+        commit("setUser", res);
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    async logoutUser({ commit }) {
+      try {
+        await logoutUserLC();
+        commit("setUser", "");
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    async getUser({ commit }) {
+      try {
+        const name = await getUserLC();
+        commit("setUser", name);
       } catch (e) {
         console.log(e);
       }

@@ -31,11 +31,52 @@ export const deleteTodoLC = async (id: string) => {
   return id;
 };
 
-// export const createCommentLC = async (id: string, comment: IStringObj) => {
-//   const todosJson = requestToTheLS("get", "todos");
-//   const todos = typeof todosJson === "string" ? JSON.parse(todosJson) : [];
-//   const idx = todos.findIndex((item: ITodoObj) => item.id === id);
-//   todos[idx].comments.push(comment);
-//   await delay(() => requestToTheLS("post", "todos", todos));
-//   return idx;
-// };
+const getUsersLC = async () => {
+  const res = await delay(() => requestToTheLS("get", "users"));
+  const json = (await typeof res) === "string" ? JSON.parse(res) : [];
+  return json.length ? json : [];
+};
+
+const checkUserReg = async (name: string) => {
+  const users = await getUsersLC();
+
+  if (users.indexOf(name) !== -1) {
+    return true;
+  }
+  return false;
+};
+
+export const regUserLC = async (name: string) => {
+  const check = await checkUserReg(name);
+
+  if (check) {
+    return "";
+  } else {
+    const users = await getUsersLC();
+    users.push(name);
+    await delay(() => requestToTheLS("post", "users", users));
+    requestToTheLS("post", "activeUser", name);
+    return name;
+  }
+};
+
+export const loginUserLC = async (name: string) => {
+  const check = await checkUserReg(name);
+
+  if (!check) {
+    return "";
+  } else {
+    requestToTheLS("post", "activeUser", name);
+    return name;
+  }
+};
+
+export const logoutUserLC = async () => {
+  await delay(() => requestToTheLS("remove", "activeUser"));
+  return;
+};
+
+export const getUserLC = async () => {
+  const user = (await delay(() => requestToTheLS("get", "activeUser"))) || null;
+  return user;
+};

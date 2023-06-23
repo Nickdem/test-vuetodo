@@ -4,7 +4,12 @@
       <span class="header__logo">TM</span>
       <nav class="header__navigation">
         <router-link to="/">Home</router-link>
-        <router-link to="/list">List</router-link>
+        <router-link to="/list" v-if="$store.getters.user.length"
+          >List</router-link
+        >
+        <button @click="logoutHandler" v-if="$store.getters.user.length">
+          Log out
+        </button>
       </nav>
     </header>
     <main class="main">
@@ -15,6 +20,23 @@
     </footer>
   </div>
 </template>
+
+<script lang="ts">
+import { Component, Vue } from "vue-property-decorator";
+import router from "./router";
+
+@Component
+export default class AppView extends Vue {
+  async mounted() {
+    await this.$store.dispatch("getUser");
+  }
+
+  logoutHandler() {
+    this.$store.dispatch("logoutUser");
+    router.push("/");
+  }
+}
+</script>
 
 <style lang="less">
 @red: #ff5656;

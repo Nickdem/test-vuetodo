@@ -20,6 +20,7 @@
 import { Vue, Component } from "vue-property-decorator";
 import TodoColumn from "@/components/TodoColumn.vue";
 import TodoInfo from "@/components/TodoInfo.vue";
+import router from "@/router";
 
 @Component({
   components: { TodoColumn, TodoInfo },
@@ -27,6 +28,12 @@ import TodoInfo from "@/components/TodoInfo.vue";
 export default class ListView extends Vue {
   btns = ["todo", "in-progress", "done"];
   activeColumnName = "todo";
+
+  created() {
+    if (!this.$store.getters.user.length) {
+      router.push("/");
+    }
+  }
 }
 </script>
 

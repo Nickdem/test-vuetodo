@@ -65,10 +65,6 @@ h2 {
 .column__item {
   border-bottom: 1px solid #7c7c7c;
   height: 70px;
-
-  &:last-child {
-    border: none;
-  }
 }
 .item {
   &__wrapper {
