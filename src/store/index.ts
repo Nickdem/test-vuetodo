@@ -61,6 +61,9 @@ export default new Vuex.Store({
     clearMessage({ commit }) {
       commit("setMessage", "");
     },
+    updateMessage({ commit }, msg) {
+      commit("setMessage", msg);
+    },
     async fetchItems({ commit }) {
       try {
         const items = await getTodosLC();

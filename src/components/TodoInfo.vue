@@ -135,6 +135,10 @@ export default class Todoinfo extends Vue {
 
   submitHandler() {
     if (this.form.title == "") {
+      this.$store.dispatch(
+        "updateMessage",
+        "Поле названия не может быть пустым"
+      );
       return;
     }
     this.$store.dispatch("changeItem", this.form);
@@ -143,6 +147,10 @@ export default class Todoinfo extends Vue {
 
   commentHandler() {
     if (this.comment == "") {
+      this.$store.dispatch(
+        "updateMessage",
+        "Поле комментарий не может быть пустым"
+      );
       return;
     }
     this.form.comments.push({

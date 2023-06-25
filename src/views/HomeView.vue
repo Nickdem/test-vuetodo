@@ -35,6 +35,7 @@ export default class HomeView extends Vue {
 
   submitHandler(e: Event) {
     if (this.name == "") {
+      this.$store.dispatch("updateMessage", "Поле имени не может быть пустым");
       return;
     }
 

@@ -39,6 +39,10 @@ export default class TodoForm extends Vue {
 
   submitHandler() {
     if (this.title == "") {
+      this.$store.dispatch(
+        "updateMessage",
+        "Поле названия не может быть пустым"
+      );
       return;
     }
     this.$store.dispatch("createItem", {
