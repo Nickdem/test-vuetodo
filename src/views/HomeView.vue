@@ -37,10 +37,11 @@ export default class HomeView extends Vue {
     if (this.name == "") {
       return;
     }
+
     const target = e.target as HTMLButtonElement;
+
     if (target.name == "sign-in") {
       this.$store.dispatch("loginUser", this.name);
-      this.name = "";
     }
 
     if (target.name == "sign-up") {
@@ -70,9 +71,13 @@ export default class HomeView extends Vue {
 .form {
   text-align: left;
   width: 400px;
+  margin-top: 20%;
+  margin-left: auto;
+  margin-right: auto;
 
   &__label {
     font-size: 1.6em;
+    line-height: 2em;
   }
 
   &__input {
@@ -80,6 +85,7 @@ export default class HomeView extends Vue {
     font-size: 1.4em;
     padding: 0.6em;
     font-family: sans-serif;
+    margin-bottom: 1em;
   }
 
   &__button {
@@ -91,7 +97,7 @@ export default class HomeView extends Vue {
     background-color: #ff5656;
 
     &:last-child {
-      margin-left: 2%;
+      margin-left: 4px;
     }
   }
 }

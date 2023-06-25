@@ -22,15 +22,38 @@
     <footer class="footer">
       <span class="footer__text">2023</span>
     </footer>
+    <div v-if="showAlert" class="alert">
+      <p>{{ message }}</p>
+      <button @click="clickHandler">X</button>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Vue, Watch } from "vue-property-decorator";
 import router from "./router";
 
 @Component
 export default class AppView extends Vue {
+  showAlert = false;
+
+  get message() {
+    const msg = this.$store.getters.message;
+    return msg;
+  }
+
+  @Watch("message")
+  whenSetItem(value: string, oldValue: string) {
+    if (value.length) {
+      this.showAlert = true;
+    }
+  }
+
+  clickHandler() {
+    this.showAlert = false;
+    this.$store.dispatch("clearMessage");
+  }
+
   async mounted() {
     await this.$store.dispatch("getUser");
   }
@@ -159,5 +182,31 @@ body {
 ::-webkit-scrollbar-track:hover {
   border-left: 1px solid #555;
   background-color: #eee;
+}
+
+.alert {
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+  width: 300px;
+  padding: 20px;
+  background-color: #7c7c7c;
+  border: 1px solid #555;
+  text-align: center;
+
+  & p {
+    color: #ffffff;
+    font-size: 1.6em;
+  }
+
+  & button {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    background: transparent;
+    border: none;
+    color: #ffffff;
+    font-weight: bold;
+  }
 }
 </style>

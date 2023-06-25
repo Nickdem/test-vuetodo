@@ -155,7 +155,10 @@ export default class Todoinfo extends Vue {
   }
 
   deleteHandler(id: string) {
-    this.$store.dispatch("deleteItem", id);
+    const res = window.confirm("Удалить эту задачу?");
+    if (res) {
+      this.$store.dispatch("deleteItem", id);
+    }
   }
 }
 </script>

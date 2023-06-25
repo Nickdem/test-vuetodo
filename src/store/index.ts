@@ -19,7 +19,7 @@ export default new Vuex.Store({
   state: {
     items: [],
     loading: true,
-    error: false,
+    message: "",
     filter: "",
     selectedTodo: {},
     user: "",
@@ -28,7 +28,7 @@ export default new Vuex.Store({
   getters: {
     items: (s) => s.items,
     loading: (s) => s.loading,
-    error: (s) => s.error,
+    message: (s) => s.message,
     filter: (s) => s.filter,
     selectedTodo: (s) => s.selectedTodo,
     user: (s) => s.user,
@@ -41,8 +41,8 @@ export default new Vuex.Store({
     setLoading: (s, value) => {
       s.loading = value;
     },
-    setError: (s, value) => {
-      s.error = value;
+    setMessage: (s, value) => {
+      s.message = value;
     },
     setFilter: (s, value) => {
       s.filter = value;
@@ -58,6 +58,9 @@ export default new Vuex.Store({
     },
   },
   actions: {
+    clearMessage({ commit }) {
+      commit("setMessage", "");
+    },
     async fetchItems({ commit }) {
       try {
         const items = await getTodosLC();
@@ -70,6 +73,7 @@ export default new Vuex.Store({
       try {
         const todo = await createTodoLC(item);
         commit("setItems", [todo, ...state.items]);
+        commit("setMessage", "Вы успешно создали задачу");
       } catch (e) {
         console.log(e);
       }
@@ -89,6 +93,7 @@ export default new Vuex.Store({
         ...state.items.slice(idx + 1),
       ]);
       commit("setSelectedTodo", item);
+      commit("setMessage", "Вы успешно изменили задачу");
     },
     async deleteItem({ commit, state }, itemId) {
       try {
@@ -98,6 +103,7 @@ export default new Vuex.Store({
           state.items.filter((item: ITodoObj) => item.id !== itemId)
         );
         commit("setSelectedTodo", {});
+        commit("setMessage", "Вы удалили задачу");
       } catch (e) {
         console.log(e);
       }
@@ -105,7 +111,12 @@ export default new Vuex.Store({
     async regUser({ commit }, name) {
       try {
         const res = await regUserLC(name);
+        if (res == "") {
+          commit("setMessage", "Такой пользователь уже есть");
+          return;
+        }
         commit("setUser", res);
+        commit("setMessage", "Вы успешно зарегестрировались");
       } catch (e) {
         console.log(e);
       }
@@ -113,7 +124,12 @@ export default new Vuex.Store({
     async loginUser({ commit }, name) {
       try {
         const res = await loginUserLC(name);
+        if (res == "") {
+          commit("setMessage", "Такого пользователя не существует");
+          return;
+        }
         commit("setUser", res);
+        commit("setMessage", "Вы успешно вошли в систему");
       } catch (e) {
         console.log(e);
       }
@@ -122,6 +138,7 @@ export default new Vuex.Store({
       try {
         await logoutUserLC();
         commit("setUser", "");
+        commit("setMessage", "Вы вышли из системы");
       } catch (e) {
         console.log(e);
       }
